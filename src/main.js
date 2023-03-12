@@ -94,6 +94,7 @@ const store = createStore({
     },
     mutations: {
         async showTable() {
+            this.state.loading = true
             const [esriConfig, Map, MapView, Graphic, GraphicsLayer, Sketch, BufferParameters, GeometryService, SpatialReference, Point, TileInfo,WebTileLayer,geometryEngineAsync] = await loadModules(["esri/config", "esri/Map", "esri/views/MapView", "esri/Graphic", "esri/layers/GraphicsLayer", "esri/widgets/Sketch", "esri/rest/support/BufferParameters",
                 "esri/tasks/GeometryService", "esri/geometry/SpatialReference", "esri/geometry/Point", 'esri/layers/support/TileInfo',"esri/layers/WebTileLayer","esri/geometry/geometryEngineAsync",], options)
             esriConfig.apiKey = "AAPK932f5cc544e84bbab268bba3fe84a1d7SmaFp9BOIQZjFsfOj4uzM52qSUILhferkbdExJlkTihF_9zSXO3NXumZUOh9kpIl";
@@ -211,6 +212,7 @@ const store = createStore({
             this.state.pushPoplineo=pushPopline
             view.on('click', viewClick)
             sketch.on("update", sketchUpdate)
+            view.on('layerview-create',()=>{ this.state.loading = false })
             console.log(lineDatas);
             
             renderAllLines()
