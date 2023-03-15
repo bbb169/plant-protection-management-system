@@ -39,7 +39,7 @@ export default {
             const iptpassword = document.getElementById("password")
             if (this.password === iptpassword.value && this.username === iptusername.value) {
                 this.$router.push({
-                    path: '/managepage',
+                    path: '/manage-page',
                     query: {
                         username: this.username
                     }

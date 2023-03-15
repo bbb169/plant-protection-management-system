@@ -81,6 +81,7 @@ const store = createStore({
             olineTimeRange:[],
             pushPopDoto:[],
             pushPopDoto:[],
+            operateLayers:[],
             rongtree: 0,
             yetree: 0,
             inorongtree: 0,
@@ -160,9 +161,6 @@ const store = createStore({
               spatialReference: { wkid: 4490 },
               subDomains: ["gisserver"],         
             });
-            map.add(veccLayer);
-            map.add(cvacLayer);
-            map.add(roadLayer);
            const geometryService = new GeometryService("https://utility.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer");
             const buffraphicsLayer = new GraphicsLayer();
             const pointgraphicsLayer = new GraphicsLayer();
@@ -182,11 +180,12 @@ const store = createStore({
             pointParams.bufferSpatialReference = new SpatialReference({ wkid: 32662 });
             pointParams.outSpatialReference = new SpatialReference({ wkid: 4326 })
 
+            map.add(veccLayer);
+            map.add(cvacLayer);
+            map.add(roadLayer);
             map.add(sketchLayer);
             map.add(pointgraphicsLayer);
-            map.add(linegraphicsLayer);
             map.add(buffraphicsLayer);
-            const dotiData = this.state.dotsData
             const lineDatas = this.state.lineData
             this.state.gotos = goTo
             this.state.addsketch= addSketch
@@ -201,6 +200,7 @@ const store = createStore({
             this.state.justremoveAllDot = justremoveDots
             this.state.justremoveline = justremovelines
             this.state.addALLs = addALL
+            this.state.operateLayers = operateLayers
             this.state.dotTimes = dotTime
             this.state.odotTimeRange=dotTimeRange
             this.state.olineTimeRange=lineTimeRange
@@ -217,71 +217,39 @@ const store = createStore({
             
             renderAllLines()
             renderDots(this.state.dotsData)
-            map.remove(linegraphicsLayer)
             function renderADots(e) {
-                if (e.isused === "正常") {
-                    const point = { //Create a point
-                        type: "point",
-                        longitude: e.x,
-                        latitude: e.y
-                    }
-                    const simpleMarkerSymbol = {
-                        type: "simple-marker",
-                            size: 5,
-                            color: [20, 224, 175],
-                            outline: null
-                    };
-                    const popupTemplate = {
-                        title: `id:${e.id}`,
-                        content: `树类型: ${e.type}<br>日期: ${e.time}<br>健康状态: ${e.isused}`
-
-                    }
-                    const pointGraphic = new Graphic({
-                        geometry: point,
-                        symbol: simpleMarkerSymbol,
-                        popupTemplate: popupTemplate,
-                        attributes: {
-                            "wrog": false,
-                            "time": `${e.time}`,
-                            "id": `${e.id}`,
-                            "isused": `${e.isused}`
-                        }
-                    });
-                    pointgraphicsLayer.add(pointGraphic);
-
-                } else {
-                    // 加载异常点数据
-                    const point = { //Create a point
-                        type: "point",
-                        longitude: e.x,
-                        latitude: e.y
-                    }
-                    const simpleMarkerSymbol = {
-                        type: "simple-marker",
-                        color: [245, 108, 108], // Orange
-                        outline: {
+                let normal = (e.isused === "正常")
+                const point = { //Create a point
+                    type: "point",
+                    longitude: e.x,
+                    latitude: e.y
+                }
+                const simpleMarkerSymbol = {
+                    type: "simple-marker",
+                        size: 5,
+                        color: normal ? [20, 224, 175] : [245, 108, 108],
+                        outline: normal ? null : {
                             color: [255, 255, 255], // White
                             width: 1
                         }
-                    };
-                    const popupTemplate = {
-                        title: `id:${e.id}`,
-                        content: `树类型: ${e.type}<br>日期: ${e.time}<br>健康状态: ${e.isused}`
+                };
+                const popupTemplate = {
+                    title: `id:${e.id}`,
+                    content: `树类型: ${e.type}<br>日期: ${e.time}<br>健康状态: ${e.isused}`
 
-                    }
-                    const pointGraphic = new Graphic({
-                        geometry: point,
-                        symbol: simpleMarkerSymbol,
-                        popupTemplate: popupTemplate,
-                        attributes: {
-                            "wrog": true,
-                            "time": `${e.time}`,
-                            "id": `${e.id}`,
-                            "isused": `${e.isused}`
-                        }
-                    });
-                    pointgraphicsLayer.add(pointGraphic);
                 }
+                const pointGraphic = new Graphic({
+                    geometry: point,
+                    symbol: simpleMarkerSymbol,
+                    popupTemplate: popupTemplate,
+                    attributes: {
+                        "wrog": !normal,
+                        "time": `${e.time}`,
+                        "id": `${e.id}`,
+                        "isused": `${e.isused}`
+                    }
+                });
+                pointgraphicsLayer.add(pointGraphic);
             }
             // 移除所有点数据
             function removeDots() {
@@ -524,7 +492,7 @@ const store = createStore({
             }
 
             function removeDots() {
-                graphicsLayer.removeAll(pointGraphic);
+                map.remove(pointgraphicsLayer);
             }
 
             function removeLines() {
@@ -665,70 +633,45 @@ const store = createStore({
             }
             
             function renderLine(e1, e2, line) {
-                if (line.isused === "已清洗") {
-                    const polyline = {
-                        type: "polyline",
-                        paths: [
-                            [e1.x, e1.y], //Longitude, latitude
-                            [e2.x, e2.y], //Longitude, latitude
-                        ]
-                    }
-                    const simpleLineSymbol = {
-                        type: "simple-line",
-                        color: [96, 193, 224], // Orange
-                        width: 2,
-                    };
-                    const popupTemplate = {
-                        title: `路段id:${line.ORIG_FID}`,
-                        content: `所属区域Id: ${line.cardid}<br>上次清洗日期: ${line.time}<br>是否清洗: ${line.isused}`
-
-                    }
-                    const polylineGraphic = new Graphic({
-                        geometry: polyline,
-                        symbol: simpleLineSymbol,
-                        popupTemplate: popupTemplate,
-                        attributes: {
-                            "wrog": false,
-                            "time": `${line.time}`,
-                            "id": `${line.ORIG_FID}`,
-                        }
-                    });
-                    linegraphicsLayer.add(polylineGraphic);
-                } else {
-                    const polyline = {
-                        type: "polyline",
-                        paths: [
-                            [e1.x, e1.y], //Longitude, latitude
-                            [e2.x, e2.y], //Longitude, latitude
-                        ]
-                    }
-                    const simpleLineSymbol = {
-                        type: "simple-line",
-                        color: [245, 108, 108], // Orange
-                        width: 2
-                    };
-                    const popupTemplate = {
-                        title: `路段id:${line.ORIG_FID}`,
-                        content: `所属区域Id: ${line.cardid}<br>上次清洗日期: ${line.time}<br>是否清洗: ${line.isused}`
-
-                    }
-                    const polylineGraphic = new Graphic({
-                        geometry: polyline,
-                        symbol: simpleLineSymbol,
-                        popupTemplate: popupTemplate,
-                        attributes: {
-                            "wrog": true,
-                            "time": `${line.time}`,
-                            "id": `${line.ORIG_FID}`,
-                        }
-                    });
-                    linegraphicsLayer.add(polylineGraphic);
+                let normal = (line.isused === "已清洗")
+                const polyline = {
+                    type: "polyline",
+                    paths: [
+                        [e1.x, e1.y], //Longitude, latitude
+                        [e2.x, e2.y], //Longitude, latitude
+                    ]
                 }
+                const simpleLineSymbol = {
+                    type: "simple-line",
+                    color: normal?[96, 193, 224]:[245, 108, 108], // Orange
+                    width: 2,
+                };
+                const popupTemplate = {
+                    title: `路段id:${line.ORIG_FID}`,
+                    content: `所属区域Id: ${line.cardid}<br>上次清洗日期: ${line.time}<br>是否清洗: ${line.isused}`
+
+                }
+                const polylineGraphic = new Graphic({
+                    geometry: polyline,
+                    symbol: simpleLineSymbol,
+                    popupTemplate: popupTemplate,
+                    attributes: {
+                        "wrog": !normal,
+                        "time": `${line.time}`,
+                        "id": `${line.ORIG_FID}`,
+                    }
+                });
+                linegraphicsLayer.add(polylineGraphic);
             }
 
             function clearAllLayers() {
                 map.remove(pointgraphicsLayer);
                 map.remove(linegraphicsLayer);;
+            }
+
+            function operateLayers(points,layers) { //-1 do nothing, 0 remove, 1 add.
+                if (points>-1) points? map.add(pointgraphicsLayer):map.remove(pointgraphicsLayer) 
+                if (layers>-1) layers? map.add(linegraphicsLayer):map.remove(linegraphicsLayer)
             }
         },
     },
