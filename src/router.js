@@ -44,8 +44,5 @@ const router = createRouter({
         }]}
     ],
 })
-// router.beforeEach((to,from,next)=>{
-//     console.log(from);
-// })
-// const VueRouterPush = Router.prototype.push
+
 export default router

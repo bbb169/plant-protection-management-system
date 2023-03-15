@@ -41,12 +41,12 @@ export default {
     },
     methods: {
         pickTime(e) {
-            console.log(this.timeRange, this.timeRange2);
+            
             if (e) {
-                console.log(1);
+                
                 this.$store.state.olineTimeRange(this.timeRange2[0], this.timeRange2[1])
             } else {
-                console.log(0);
+                
                 this.$store.state.odotTimeRange(this.timeRange[0], this.timeRange[1])
             }
 
@@ -72,11 +72,11 @@ export default {
             return dateTemp
         },
         dotValueChange() {
-            console.log(this.datatime(this.dotvalue[0]), this.datatime(this.dotvalue[1]));
+            
             this.$store.state.dotTimes(this.datatime(this.dotvalue[0]), this.datatime(this.dotvalue[1]))
         },
         lineValueChange() {
-            console.log(this.datatime(this.linevalue[0]), this.datatime(this.linevalue[1]));
+            
             this.$store.state.lineTimes(this.datatime(this.linevalue[0]), this.datatime(this.linevalue[1]))
         }
     },
@@ -92,7 +92,7 @@ export default {
         this.input1.year = ye
         this.input1.month = months[mon]
         this.input1.day = d
-        console.log(this.input1);
+        
     }
 }
 </script>

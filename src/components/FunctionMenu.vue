@@ -135,7 +135,7 @@ export default {
             }
         },
         toBuffer() {
-            console.log('buffering', this.num);
+            
             this.$store.state.bufferrenders(this.num)
         },
 

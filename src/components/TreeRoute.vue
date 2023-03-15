@@ -115,12 +115,12 @@ export default {
                             });
             graphicsLayer.add(pointStartgraphic)
             view.on('click', (e) => {
-                console.log(e);
+                
                 const cx=e.mapPoint.longitude
                 const cy=e.mapPoint.latitude
                 if (e.button===2) {
                     // 新建起始点
-                    console.log('x:' + cx + ', y:' + cy);
+                    
                 const point = { //Create a point
                     type: "point",
                     longitude: cx,
@@ -152,7 +152,7 @@ export default {
                     // 开始路径分析
                 this.inordots.forEach(e=>{
                         if (e.x<(cx+0.003354)&&e.x>(cx-0.003354)&&e.y<(cy+0.003354)&&e.y>(cy-0.003354)) {
-                            console.log(cx,cy);
+                            
                             view.graphics.removeAll()
                             var pointStop = new Point(cx, cy)
                             var pointStop2 = new Point(e.x, e.y)
@@ -164,7 +164,7 @@ export default {
                             });
                             view.graphics.add(graphic);
                             view.graphics.add(graphic2);
-                            // console.log(view.graphics);
+                            // 
                             const routeParams = new RouteParameters({
                                 stops: new FeatureSet({
                                     features: view.graphics.toArray()
@@ -212,7 +212,7 @@ export default {
                     view.popup.on("trigger-action", function (event) {
                         // If the zoom-out action is clicked, fire the zoomOut() function
                         if (event.action.id === e.id) {
-                            console.log(e);
+                            
                             view.graphics.removeAll()
                             var pointStop = new Point(110.324812, 20.070832)
                             var pointStop2 = new Point(e.x, e.y)
@@ -238,7 +238,7 @@ export default {
                             });
                             view.graphics.add(graphic);
                             view.graphics.add(graphic2);
-                            console.log(view.graphics);
+                            
                             const routeParams = new RouteParameters({
                                 stops: new FeatureSet({
                                     features: view.graphics.toArray()
@@ -256,13 +256,13 @@ export default {
                     // view.popup.on("trigger-action", function(event){
                     // // If the zoom-out action is clicked, fire the zoomOut() function
                     // if(event.action.id === "measure-this"){
-                    //     console.log(event);
+                    //     
                     // }
                     // });
                     graphicsLayer.add(pointGraphic);
                 }
             })
-            console.log(view.popup);
+            
             // var pointStop2 = new Point(110.324812, 20.065132)
             // addGraphic("destination", pointStop2);
             // getRoute()
@@ -279,16 +279,16 @@ export default {
             //         "name": "end",
             //     };
             //     view.graphics.add(graphic);
-            //     console.log(view.graphics);
+            //     
             // }
 
             function getRoute(routeParams) {
-                console.log(123);
+                
                 view.graphics.removeAll()
                 route.solve(routeUrl, routeParams).then(function (data) {
 
                         data.routeResults.forEach(function (result) {
-                            console.log(result);
+                            
                             result.route.symbol = {
                                 type: "simple-line",
                                 color: [5, 150, 255],
@@ -299,7 +299,7 @@ export default {
                     })
 
                     .catch(function (error) {
-                        console.log(error);
+                        
                     })
 
             }

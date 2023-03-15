@@ -9,7 +9,7 @@ export default {
     mounted(){
         const timer = setInterval(() => {
            this.$store.state.bufferrenders()
-           console.log(1);
+           
             clearInterval(timer)
         }, 2000);
     }

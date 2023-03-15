@@ -50,14 +50,14 @@ export default {
                 }
                 if (this.$route.fullPath === "/managepage/tree-route") {}
                 if (this.$route.fullPath === "/managepage/info-tables-map" || this.$route.fullPath === "/managepage/point-buffer" || this.$route.fullPath === "/managepage/time-filter-bar" || this.$route.fullPath === "/managepage/my-advice") {
-                    console.log(this.$route);
+                    
                     const getData = setInterval(() => {
-                        console.log(this.$store.state.tabledots, this.renderTimes);
+                        
                         if (this.$store.state.tabledots != [] && !this.renderTimes) {
                             this.renderTimes++
                             this.showTable()
                             clearInterval(getData)
-                            console.log('clear');
+                            
                             setTimeout(() => {
                                 this.renderTimes = 0
                             }, 10000);
@@ -87,7 +87,7 @@ export default {
                 this.$store.state.tabledots.push(e)
             }
         });
-        console.log(this.$store.state.tabledots);
+        
         this.$store.state.dotsData = res.treeinfo
         // get roads
         const {
@@ -105,12 +105,12 @@ export default {
             }
             this.$store.state.lineData.push(e)
         })
-        console.log(this.$store.state.lineData);
+        
         // get workes
         const {
             data: res2
         } = await this.$http.get('http://152.136.254.142:5000/api/getworker')
-        console.log(res2.personinfo);
+        
         res2.personinfo.forEach(e => {
             e.manpic = (e.manpic || "").split(",")
         });
@@ -121,15 +121,15 @@ export default {
         res3.unexamine.forEach(e => {
             e.pic = (e.pic || "").split(",")
             if (e.recognize.length > 10) {
-                // console.log(JSON.parse(e.recognize));
+                // 
                 e.recognize = JSON.parse(e.recognize)
             }
         })
         this.$store.state.advices = res3.unexamine
-        console.log(res3);
+        
         this.showTable()
         this.renderTimes++
-        console.log(this.renderTimes);
+        
         setTimeout(() => {
             this.renderTimes = 0
         }, 10000);

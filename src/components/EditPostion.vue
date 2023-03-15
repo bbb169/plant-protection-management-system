@@ -299,9 +299,7 @@ export default {
             view.ui.add(sketch, "bottom-right");
             sketch.on("update", async (e) => {
                 if (e.state === "complete") {
-                    console.log(e.graphics[0]);
                     if (e.graphics[0].geometry.type === "polyline") {
-                        console.log(e.graphics[0].geometry.paths[0]);
                         e.graphics[0].geometry.paths[0].forEach(e => {
                             const d = {
                                 x: e[0],
@@ -309,7 +307,6 @@ export default {
                             }
                             this.cgdots.push(d)
                         })
-                        console.log(this.cgdots);
                         if (e.graphics[0].attributes) {
                             this.eidtOne = e.graphics[0].attributes.id
                             this.input5 = e.graphics[0].attributes.areaid
@@ -322,12 +319,10 @@ export default {
 
                         this.showlineBox = true
                     } else {
-                        console.log(e.graphics[0].geometry.x, e.graphics[0].geometry.y);
                         this.cgdot = {
                             x: e.graphics[0].geometry.x,
                             y: e.graphics[0].geometry.y
                         }
-                        console.log(this.cgdot);
                         if (e.graphics[0].attributes) {
                             this.eidtOne = e.graphics[0].attributes.id
                         } else {
@@ -480,14 +475,9 @@ export default {
             })
 
             function replaceDot(e) {
-                console.log(e, graphicsLayer);
                 graphicsLayer.graphics.items.forEach(i => {
                     if (i.attributes && i.attributes.id == e.id && i.symbol.type === "simple-marker") {
                         i.visible = false
-                        // i.symbol.color.a=0
-                        // i.destroy() 
-
-                        console.log(i);
                         renderADots(e)
                         return
                     }
@@ -497,11 +487,9 @@ export default {
             this.toReplaceDot = replaceDot
             // 更新线
             function replaceLine(e) {
-                console.log(e);
                 graphicsLayer.graphics.items.forEach(i => {
                     if (i.attributes && i.attributes.id == e.ORIG_FID && i.symbol.type != "simple-marker") {
                         i.visible = false
-                        console.log(i);
                         for (let num = 0; num < e.dots.length - 1; num++) {
                             renderLine(e.dots[num], e.dots[num + 1], e)
                         }
@@ -557,7 +545,6 @@ export default {
                 this.input3 = 0
             }
             this.input1.replace('/', '-')
-            console.log(this.input1);
 
             this.$refs.upload1.submit()
             if (this.eidtOne) {
@@ -581,7 +568,6 @@ export default {
 
                         e.x = this.cgdot.x
                         e.y = this.cgdot.y
-                        console.log(this.toReplaceDot, e);
                         this.toReplaceDot(e)
                         this.showinput = !this.showinput
                         setTimeout(() => {
@@ -591,7 +577,6 @@ export default {
                     }
                 });
                 const timerr = setInterval(() => {
-                    console.log(this.imgurl, this.renderdots);
 
                     this.posturl = `http://152.136.254.142:5000/api/edit?id=${this.eidtOne}`
                     if (this.input1) {
@@ -613,14 +598,12 @@ export default {
                         const data = JSON.stringify(this.cgdot)
                         this.posturl = this.posturl + `&dot=${data}`
                     }
-                    console.log(this.posturl);
                     this.$http.post(`${this.posturl}`)
                     this.clearAlldata()
                     clearInterval(timerr)
                 }, 3000)
             } else {
                 const is = this.typeCheck(1)
-                console.log(is);
                 if (is) {
                     if (!this.input3) {
                         this.input3 = '异常'
@@ -638,11 +621,9 @@ export default {
 
                     }
                     this.$store.state.dotsData.push(renditem)
-                    console.log(renditem,this.$store.state.dotsData);
                     this.renderADot(renditem)
                     this.showinput = !this.showinput
                     const timerr = setInterval(() => {
-                        console.log(this.imgurl, this.renderdots);
 
                         this.posturl = `http://152.136.254.142:5000/api/edit`
                         if (this.input1) {
@@ -664,7 +645,7 @@ export default {
                         if (this.input5 != NaN) {
                             this.posturl = this.posturl + `&areaid=${this.input5}`
                         }
-                        console.log(this.posturl);
+                        
                         this.$http.post(`${this.posturl}`)
                         this.clearAlldata()
                         clearInterval(timerr)
@@ -681,7 +662,7 @@ export default {
         submit2() {
 
             this.input1.replace('/', '-')
-            console.log(this.input2);
+            
 
             if (this.input2 === '已清洗') {
                 this.input2 = 1
@@ -689,7 +670,7 @@ export default {
             if (this.input2 === '未清洗') {
                 this.input2 = 0
             }
-            console.log(this.input2);
+            
             if (this.eidtOne) {
                 this.lineDatas.forEach(e => {
                     if (e.ORIG_FID == this.eidtOne) {
@@ -709,7 +690,7 @@ export default {
                             e.isused = '已清洗'
                         }
                         e.dots = this.cgdots
-                        console.log(this.toReplaceLine);
+                        
                         this.toReplaceLine(e)
                         return
                     }
@@ -731,13 +712,13 @@ export default {
                     const data = JSON.stringify(this.cgdots)
                     this.posturl = this.posturl + `&dots=${data}`
                 }
-                console.log(this.posturl);
+                
                 this.$http.post(`${this.posturl}`)
 
                 this.clearAlldata()
             } else {
                 const is = this.typeCheck(0)
-                console.log(is);
+                
                 if (is) {
                     if (!this.input2) {
                         this.input2 = '未清洗'
@@ -755,7 +736,7 @@ export default {
                     }
                     
                     this.$store.state.lineData.push(renditem)
-                    console.log(renditem,this.$store.state.lineData);
+                    
                     for (let num = 0; num < renditem.dots.length - 1; num++) {
                             this.renderAline(renditem.dots[num], renditem.dots[num + 1], renditem)
                     }
@@ -778,7 +759,7 @@ export default {
                         const data = JSON.stringify(this.cgdots)
                         this.posturl = this.posturl + `&dots=${data}`
                     }
-                    console.log(this.posturl);
+                    
                     this.$http.post(`${this.posturl}`)
                     this.clearAlldata()
                 }
@@ -787,10 +768,10 @@ export default {
             // this.uploadImgUrl=`http://152.136.254.142:3000/api/blog/uploadimg?id=${this.eidtOne+1}&time=${this.input1}&type=${this.input2}&isused=${this.input3}`
         },
         handleRemove(file, fileList) {
-            console.log(file, fileList);
+            
         },
         handlePreview(file) {
-            console.log(file);
+            
         },
         handleExceed(files, fileList) {
             this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
@@ -799,9 +780,9 @@ export default {
             return this.$confirm(`确定移除 ${file.name}？`);
         },
         handleAvatarSuccess(res, file) {
-            console.log(res, file);
+            
             this.imgurl.push(res.data.url)
-            console.log(this.imgurl);
+            
         },
         cancel() {
             this.showinput = false

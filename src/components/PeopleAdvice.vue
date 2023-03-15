@@ -8,7 +8,7 @@
         <el-table-column prop="message" label="意见" min-width="80" />
         <el-table-column prop="recognize" label="识别结果" min-width="200">
             <template #default="scope">
-                <div>{{scope.row.recognize!=''?scope.row.recognize.AliasName+' '+scope.row.recognize.Family+' '+scope.row.recognize.Genus+' '+scope.row.recognize.Name+' 相似度：'+scope.row.recognize.Score:""}}</div>
+                <div>{{scope.row.recognize!=''?scope.row.recognize?.AliasName+' '+scope.row.recognize?.Family+' '+scope.row.recognize?.Genus+' '+scope.row.recognize?.Name+' 相似度：'+scope.row.recognize?.Score:""}}</div>
             </template>
 
         </el-table-column>
@@ -48,7 +48,7 @@ export default {
     },
     methods: {
         elrowclick(e1, e2, e3) {
-            console.log(e1);
+            
             this.$store.state.dotsData.forEach(e => {
                 if (e.id === e1.treeid) {
                     this.$store.state.gotos(e)
@@ -64,7 +64,7 @@ export default {
         },
         async handleEdit(index, row) {
             
-            console.log(row)
+            
             this.eidtOne = index
             this.$http.post(`http://152.136.254.142:5000/api/past?tipid=${row.id}`)
             setTimeout(async () => {
@@ -75,11 +75,11 @@ export default {
                 res3.unexamine.forEach(e => {
                     e.pic = (e.pic || "").split(",")
                     if (e.recognize.length > 10) {
-                        console.log(JSON.parse(e.recognize));
+                        
                         e.recognize = JSON.parse(e.recognize)
                     }
                 })
-                console.log(res3);
+                
                 this.$store.state.advices = res3.unexamine
             }, 1000);
             let pertp = '榕树'
@@ -94,12 +94,12 @@ export default {
                 type: pertp,
                 isused: "异常",
             }
-            console.log(obj);
+            
             this.$store.state.toReplaceDot(obj)
 
         },
         async deleteRow(index, row) {
-            console.log(row.id);
+            
             this.$http.post(`http://152.136.254.142:5000/api/notpast?tipid=${row.id}`)
             setTimeout(async () => {
                 const {
@@ -109,11 +109,11 @@ export default {
                 res3.unexamine.forEach(e => {
                     e.pic = (e.pic || "").split(",")
                     if (e.recognize.length > 10) {
-                        console.log(JSON.parse(e.recognize));
+                        
                         e.recognize = JSON.parse(e.recognize)
                     }
                 })
-                console.log(res3);
+                
                 this.$store.state.advices = res3.unexamine
             }, 1000);
         },
@@ -122,11 +122,11 @@ export default {
         },
         async fankui() {
             this.$http.post(`http://152.136.254.142:5000/api/advice?id=2&message=能不能修剪一下树冠&pic=http://152.136.254.142:3000/uploads/bb6182b7d53e2773c1285bc5c2221c12`)
-            console.log(1);
+            
             const {
                 data: res
             } = await this.$http.get(`http://152.136.254.142:5000/api/examine`)
-            console.log(res);
+            
         }
     },
     created() {

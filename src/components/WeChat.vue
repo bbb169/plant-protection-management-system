@@ -167,11 +167,11 @@ export default {
             });
             // const routeUrl = "https://edutrial.geoscene.cn/geoscene/rest/services/finrout/NAServer/route";
             // view.on('click', (e) => {
-            //     console.log(e);
+            //     
             //     const cx=e.mapPoint.longitude
             //     const cy=e.mapPoint.latitude
             //         // 新建起始点
-            //         console.log('x:' + cx + ', y:' + cy);
+            //         
             //     const point = { //Create a point
             //         type: "point",
             //         longitude: cx,
@@ -203,7 +203,7 @@ export default {
             //         // 开始路径分析
             //     this.inordots.forEach(e=>{
             //             if (e.x<(cx+0.003354)&&e.x>(cx-0.003354)&&e.y<(cy+0.003354)&&e.y>(cy-0.003354)) {
-            //                 console.log(cx,cy);
+            //                 
             //                 view.graphics.removeAll()
             //                 var pointStop = new Point(cx, cy)
             //                 var pointStop2 = new Point(e.x, e.y)
@@ -215,7 +215,7 @@ export default {
             //                 });
             //                 view.graphics.add(graphic);
             //                 view.graphics.add(graphic2);
-            //                 // console.log(view.graphics);
+            //                 // 
             //                 const routeParams = new RouteParameters({
             //                     stops: new FeatureSet({
             //                         features: view.graphics.toArray()
@@ -245,7 +245,7 @@ export default {
 
             //             // If the zoom-out action is clicked, fire the zoomOut() function
 
-            //             console.log(e);
+            //             
             //             view.graphics.removeAll()
             //             var pointStop = new Point(this.position.x, this.position.y)
             //             var pointStop2 = new Point(e.x, e.y)
@@ -271,7 +271,7 @@ export default {
             //             });
             //             view.graphics.add(graphic);
             //             view.graphics.add(graphic2);
-            //             console.log(view.graphics);
+            //             
             //             const routeParams = new RouteParameters({
             //                 stops: new FeatureSet({
             //                     features: view.graphics.toArray()
@@ -289,19 +289,19 @@ export default {
             //             // view.popup.on("trigger-action", function(event){
             //             // // If the zoom-out action is clicked, fire the zoomOut() function
             //             // if(event.action.id === "measure-this"){
-            //             //     console.log(event);
+            //             //     
             //             // }
             //             // });
             //             graphicsLayer.add(pointGraphic);
             //         }
             //     })
             //     function getRoute(routeParams) {
-            //     console.log(123);
+            //     
             //     view.graphics.removeAll()
             //     route.solve(routeUrl, routeParams).then(function (data) {
 
             //             data.routeResults.forEach(function (result) {
-            //                 console.log(result);
+            //                 
             //                 result.route.symbol = {
             //                     type: "simple-line",
             //                     color: [5, 150, 255],
@@ -312,11 +312,11 @@ export default {
             //         })
 
             //         .catch(function (error) {
-            //             console.log(error);
+            //             
             //         })
 
             // }
-            //     // console.log(view.popup);
+            //     // 
             // }
 
             // const track = new Track({
@@ -337,14 +337,14 @@ export default {
             // });
             // view.ui.add(track, "top-left");
             // track.on("track", (trackEvent) => {
-            //     console.log(trackEvent);
+            //     
             //     // JSON.stringify(trackEvent.position)
             //     // this.position=JSON.parse(trackEvent.position)
 
-            //     // console.log("track: %s", mapView.scale);
+            //     // 
             // })
-            // console.log('555555555555555');
-            // console.log(this.loadDots);
+            // 
+            // 
             const renderADots = (e) => {
                 if (e.isused === "正常") {
                     const point = { //Create a point
@@ -380,7 +380,7 @@ export default {
                     view.popup.on("trigger-action", (event) => {
                         // If the zoom-out action is clicked, fire the zoomOut() function
                         if (event.action.id === e.id) {
-                            console.log(event, e, this.showinput);
+                            
                             this.eidtOne = e.id
                             this.areaId = e.areaid
                             this.showinput = true
@@ -426,14 +426,14 @@ export default {
                     view.popup.on("trigger-action", (event) => {
                         // If the zoom-out action is clicked, fire the zoomOut() function
                         if (event.action.id === e.id) {
-                            console.log(event, e, this.showinput);
+                            
                             this.eidtOne = e.id
                             this.showinput = true
 
                         }
                     });
                     // pointGraphic.on('click',(e)=>{
-                    //     console.log(e);
+                    //     
                     // })
                     pointgraphicsLayer.add(pointGraphic);
                 }
@@ -490,7 +490,7 @@ export default {
                                         e.time = this.input1
                                     }
                                     e.isused = '已清洗'
-                                    console.log(this.toReplaceLine);
+                                    
                                     this.toReplaceLine(e)
                                     return
                                 }
@@ -542,7 +542,7 @@ export default {
                                         e.time = this.input1
                                     }
                                     e.isused = '已清洗'
-                                    console.log(this.toReplaceLine);
+                                    
                                     this.toReplaceLine(e)
                                     return
                                 }
@@ -556,7 +556,7 @@ export default {
             this.renderAline = renderLine
             const renderPosition = (e) => {
                 positongraphicsLayer.removeAll()
-                // console.log(e);
+                // 
                 const point = { //Create a point
                     type: "point",
                     longitude: e.x,
@@ -576,24 +576,24 @@ export default {
                     geometry: point,
                     symbol: simpleMarkerSymbol,
                 });
-                console.log(pointGraphic);
+                
                 positongraphicsLayer.add(pointGraphic);
             }
             this.orenderPosition = renderPosition
             // function removepostion(){
-            //     // console.log(e);
-            //     console.log(123154);
+            //     // 
+            //     
             //     positongraphicsLayer.removeAll()
             // }
             // this.oremovepostion=removepostion
             function replaceDot(e) {
-                console.log(e, pointgraphicsLayer);
+                
                 pointgraphicsLayer.graphics.items.forEach(i => {
                     if (i.attributes.id == e.id) {
                         i.visible = false
                         // i.symbol.color.a=0
                         // i.destroy() 
-                        console.log(i);
+                        
                         renderADots(e)
                         return
                     }
@@ -603,11 +603,11 @@ export default {
             this.toReplaceDot = replaceDot
 
             function replaceLine(e) {
-                console.log(e);
+                
                 linegraphicsLayer.graphics.items.forEach(i => {
                     if (i.attributes.id == e.ORIG_FID) {
                         i.visible = false
-                        console.log(i);
+                        
                         for (let num = 0; num < e.dots.length - 1; num++) {
                             renderLine(e.dots[num], e.dots[num + 1], e)
                         }
@@ -618,12 +618,12 @@ export default {
             }
             this.toReplaceLine = replaceLine
             function getRoute(routeParams) {
-                console.log(123);
+                
                 view.graphics.removeAll()
                 route.solve(routeUrl, routeParams).then(function (data) {
 
                         data.routeResults.forEach(function (result) {
-                            console.log(result);
+                            
                             result.route.symbol = {
                                 type: "simple-line",
                                 color: [5, 150, 255],
@@ -634,7 +634,7 @@ export default {
                     })
 
                     .catch(function (error) {
-                        console.log(error);
+                        
                     })
 
             }
@@ -669,12 +669,12 @@ export default {
             //                 });
             // graphicsLayer.add(pointStartgraphic)
             // view.on('click', (e) => {
-            //     console.log(e);
+            //     
             //     const cx=e.mapPoint.longitude
             //     const cy=e.mapPoint.latitude
             //     if (e.button===2) {
             //         // 新建起始点
-            //         console.log('x:' + cx + ', y:' + cy);
+            //         
             //     const point = { //Create a point
             //         type: "point",
             //         longitude: cx,
@@ -705,7 +705,7 @@ export default {
             //         // 开始路径分析
             //     this.inordots.forEach(e=>{
             //             if (e.x<(cx+0.003354)&&e.x>(cx-0.003354)&&e.y<(cy+0.003354)&&e.y>(cy-0.003354)) {
-            //                 console.log(cx,cy);
+            //                 
             //                 view.graphics.removeAll()
             //                 var pointStop = new Point(cx, cy)
             //                 var pointStop2 = new Point(e.x, e.y)
@@ -717,7 +717,7 @@ export default {
             //                 });
             //                 view.graphics.add(graphic);
             //                 view.graphics.add(graphic2);
-            //                 // console.log(view.graphics);
+            //                 // 
             //                 const routeParams = new RouteParameters({
             //                     stops: new FeatureSet({
             //                         features: view.graphics.toArray()
@@ -753,7 +753,7 @@ export default {
             //         };
             //         const popupTemplate = {
             //             title: `id:${e.id}`,
-            //             content: `树类型: ${e.type}<br>日期: ${e.time}<br>健康状态: ${e.isused}<div @click="console.log(1)">123</div>`,
+            //             content: `树类型: ${e.type}<br>日期: ${e.time}<br>健康状态: ${e.isused}<div @click="
             //             actions: [measureThisAction],
 
             //         }
@@ -765,7 +765,7 @@ export default {
             //         view.popup.on("trigger-action", function (event) {
             //             // If the zoom-out action is clicked, fire the zoomOut() function
             //             if (event.action.id === e.id) {
-            //                 console.log(e);
+            //                 
             //                 view.graphics.removeAll()
             //                 var pointStop = new Point(110.324812, 20.070832)
             //                 var pointStop2 = new Point(e.x, e.y)
@@ -791,7 +791,7 @@ export default {
             //                 });
             //                 view.graphics.add(graphic);
             //                 view.graphics.add(graphic2);
-            //                 console.log(view.graphics);
+            //                 
             //                 const routeParams = new RouteParameters({
             //                     stops: new FeatureSet({
             //                         features: view.graphics.toArray()
@@ -809,13 +809,13 @@ export default {
             //         // view.popup.on("trigger-action", function(event){
             //         // // If the zoom-out action is clicked, fire the zoomOut() function
             //         // if(event.action.id === "measure-this"){
-            //         //     console.log(event);
+            //         //     
             //         // }
             //         // });
             //         graphicsLayer.add(pointGraphic);
             //     }
             // })
-            // console.log(view.popup);
+            // 
             // // var pointStop2 = new Point(110.324812, 20.065132)
             // // addGraphic("destination", pointStop2);
             // // getRoute()
@@ -832,16 +832,16 @@ export default {
             // //         "name": "end",
             // //     };
             // //     view.graphics.add(graphic);
-            // //     console.log(view.graphics);
+            // //     
             // // }
 
             // function getRoute(routeParams) {
-            //     console.log(123);
+            //     
             //     view.graphics.removeAll()
             //     route.solve(routeUrl, routeParams).then(function (data) {
 
             //             data.routeResults.forEach(function (result) {
-            //                 console.log(result);
+            //                 
             //                 result.route.symbol = {
             //                     type: "simple-line",
             //                     color: [5, 150, 255],
@@ -852,19 +852,19 @@ export default {
             //         })
 
             //         .catch(function (error) {
-            //             console.log(error);
+            //             
             //         })
 
             // }
         },
         handleRemove(file, fileList) {
-            console.log(file, fileList);
+            
         },
         cancel() {
             this.showinput = false
         },
         handlePreview(file) {
-            console.log(file);
+            
         },
         handleExceed(files, fileList) {
             this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
@@ -873,10 +873,10 @@ export default {
             return this.$confirm(`确定移除 ${ file.name }？`);
         },
         handleAvatarSuccess(res, file) {
-            console.log(res, file);
-            // console.log(res.data.url)
+            
+            // 
             this.imgurl.push(res.data.url)
-            console.log(this.imgurl);
+            
             // this.imageUrl = res.data.url;
             // this.$emit("childRightFn", {
             //     ...this.rightData,
@@ -891,8 +891,8 @@ export default {
             this.imgurl= []
         },
         async submit() {
-            // console.log(this.eidtOne);
-            // console.log(this.input3, this.input1, this.input2);
+            // 
+            // 
             if (this.input3 === '正常') {
                 this.input3 = 1
             }
@@ -900,15 +900,15 @@ export default {
                 this.input3 = 0
             }
             this.input1.replace('/', '-')
-            console.log(this.input1);
+            
             this.showinput = !this.showinput
             this.$refs.upload1.submit()
             if (this.$route.query.id != '0') {
-                console.log(this.imgurl);
-                console.log(1564561);
+                
+                
                 this.posturl = `http://152.136.254.142:5000/api/edit?id=${this.eidtOne}`
                 // if (this.recogzres.length>1) {
-                //     console.log(this.recogzres);
+                //     
                 //     this.posturl = this.posturl + `&recognize=${this.recogzres}`
                 //     this.recogzres={}
                 // }
@@ -928,7 +928,7 @@ export default {
                     this.posturl = this.posturl + `&imgurl=${this.imgurl}`
                     this.imgurl = {}
                 }
-                console.log(this.posturl);
+                
                 this.$http.post(`${this.posturl}`)
                 this.imgurl = []
                 this.loadDots.forEach(e => {
@@ -945,20 +945,20 @@ export default {
                         if (this.input3 === 1) {
                             e.isused = '正常'
                         }
-                        console.log(this.toReplaceDot);
+                        
                         this.toReplaceDot(e)
                         return
                     }
                 });
             } else {
                 setTimeout(async () => {
-                    console.log(this.imgurl);
-                    console.log('******************');
+                    
+                    
                     // this.postUrl()
                     this.imgto64(this.imgurl)
-                    // console.log(this.recogzres);
+                    // 
                     // const recog=JSON.stringify(this.recogzres)
-                    // console.log(recog);
+                    // 
 
                 }, 2000)
             }
@@ -967,7 +967,7 @@ export default {
         postUrl() {
             this.posturl = `http://152.136.254.142:5000/api/advice?id=${this.eidtOne}&areaid=${this.areaId}`
             if (this.recogzres.length > 1) {
-                console.log(this.recogzres);
+                
                 this.posturl = this.posturl + `&recognize=${this.recogzres}`
                 this.recogzres = {}
             }
@@ -984,7 +984,7 @@ export default {
                 this.posturl = this.posturl + `&pic=${this.imgurl}`
                 this.imgurl = {}
             }
-            console.log(this.posturl);
+            
             this.$http.post(`${this.posturl}`)
             this.imgurl = []
         },
@@ -1025,13 +1025,13 @@ export default {
                     })
                 })
             }
-            console.log(1564456);
+            
 
             (async () => {
                 let image_url = img
-                console.log(1564);
+                
                 const dataURL = await urlToBase64Async(image_url)
-                console.log(dataURL);
+                
                 var img_base64 = dataURL.replace('data:image/jpeg;base64,', '');
                 var formData = {
                     img_base64: img_base64
@@ -1052,12 +1052,12 @@ export default {
                 this.recogzres.Genus = results.data.Result[0].Genus
                 this.recogzres.Name = results.data.Result[0].Name
                 this.recogzres.Score = results.data.Result[0].Score
-                // console.log(this.recogzres);
-                console.log(this.recogzres);
+                // 
+                
                 this.recogzres = JSON.stringify(this.recogzres)
-                console.log(this.recogzres);
+                
                 this.postUrl()
-                // console.log(dataURL)
+                // 
                 // this.img64=dataURL
                 // return dataURL
                 // data:image/png;base64,iVBORw0KGgoAAAANSU
@@ -1067,28 +1067,28 @@ export default {
     async created() {
         let vConsole = new Vconsole();
 
-        console.log(this.$route.query.id);
+        
         const {
             data: res
         } = await this.$http.get('http://152.136.254.142:5000/api/gettrees')
-        console.log(res);
-        console.log('ressssssss');
+        
+        
         const {
             data: res2
         } = await this.$http.get('http://152.136.254.142:5000/api/getworker')
-        console.log(res2.personinfo);
+        
         res2.personinfo.forEach(e => {
             e.manpic = (e.manpic || "").split(",")
         });
         if (this.$route.query.id === '0') {
             if (navigator.geolocation) {
                 var id = navigator.geolocation.getCurrentPosition(async (position) => {
-                        console.log("纬度" + position.coords.latitude + "经度" + position.coords.longitude)
+                        
                         this.position.y = position.coords.latitude
                         this.position.x = position.coords.longitude
 
-                        console.log('-----------');
-                        console.log(this.position);
+                        
+                        
 
                         res.treeinfo.forEach(e => {
                             if (e.x < (this.position.x + 0.003) && e.x > (this.position.x - 0.003) && e.y > (this.position.y - 0.003) && e.y < (this.position.y + 0.003)) {
@@ -1101,7 +1101,7 @@ export default {
                                 this.loadDots.push(e)
                             }
                         });
-                        console.log(this.loadDots);
+                        
                         setTimeout(() => {
                             this.loadDots.forEach(e => {
                                 this.renderDot(e)
@@ -1123,11 +1123,11 @@ export default {
                     })
                 // navigator.geolocation.clearWatch(id); 停止监视
             } else {
-                console.log("你的浏览器不支持geolocation");
+                
             }
         }
         if (this.$route.query.id == 1) {
-            console.log(res);
+            
             res.treeinfo.forEach(e => {
                 if (e.isused === 0) {
                     e.isused = '异常'
@@ -1156,7 +1156,7 @@ export default {
                     this.loadLines.push(e)
                 }
             })
-            console.log(this.loadLines);
+            
             res.treeinfo.forEach(e => {
                 if (e.areaid === this.$route.query.wid) {
 
@@ -1169,7 +1169,7 @@ export default {
                     this.loadDots.push(e)
                 }
             })
-            console.log(this.loadDots,this.inordots);
+            
             setTimeout(() => {
                 this.loadDots.forEach(e => {
                     this.renderDot(e)
@@ -1219,7 +1219,7 @@ export default {
             d = '0' + d
         }
         this.input1 = ye + '-' + months[mon] + '-' + d
-        console.log(this.input1);
+        
     },
 
 }

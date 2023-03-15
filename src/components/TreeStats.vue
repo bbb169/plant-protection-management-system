@@ -67,7 +67,7 @@ export default {
                 this.time8++
             }
         });
-        console.log(this.treecount);
+        
         const mytypecake = echarts.init(document.getElementById('typecake'));
         // draw typecake
         mytypecake.setOption({

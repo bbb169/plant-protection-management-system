@@ -317,7 +317,7 @@ export default {
             this.$store.state.pushPopDoto(e.row)
         },
         elrowclick(e) {
-            console.log(e.row);
+            
             this.$store.state.gotos(e.row.dots[0])
             setTimeout(() => {
                 this.$store.state.pushPoplineo(e.row)
@@ -475,7 +475,7 @@ export default {
                 this.$store.state.justremoveline()
                 setTimeout(() => {
                     this.times2 = 0
-                    // console.log('time2:'+this.times2);
+                    // 
                 }, 1000);
             }
             if (this.times2 === 1) {
@@ -494,7 +494,7 @@ export default {
                     }
                 } else {
                     if (this.filerOder.s === 2) {
-                        console.log(this.filerOder.f, 'isused');
+                        
                         for (let num = 0; num < row.dots.length - 1; num++) {
                             // renderLine(e.dots[num],e.dots[num+1],e)
                             this.$store.state.renderAline(row.dots[num], row.dots[num + 1], row)
@@ -506,7 +506,7 @@ export default {
 
         },
         rowClick(row, column, event) {
-            console.log(row, column, event);
+            
             this.$store.state.gotos(row)
             if (row.ORIG_FID) {
 
@@ -517,7 +517,7 @@ export default {
         handleEdit(index, row) {
             this.$store.state.showinput = !this.$store.state.showinput
             this.eidtOne = row.id
-            console.log(this.eidtOne);
+            
         },
         handleEdit2(index, row) {
             this.$store.state.showlineBox = !this.$store.state.showlineBox
@@ -525,7 +525,7 @@ export default {
         },
         handleEdit3(index, row) {
             this.input1 = ''
-            console.log(index, row)
+            
             this.$store.state.showWorkBox = !this.$store.state.showWorkBox
             this.eidtOne = row.cardid
         },
@@ -537,12 +537,12 @@ export default {
                 this.input3 = 0
             }
             this.input1.replace('/', '-')
-            console.log(this.input1);
+            
             this.$store.state.showinput = !this.$store.state.showinput
             this.$refs.upload1.submit()
 
             const timerr = setInterval(() => {
-                console.log(this.imgurl);
+                
                 this.$store.state.tabledots.forEach(e => {
                     if (e.id === this.eidtOne) {
                         if (this.input1) {
@@ -558,7 +558,7 @@ export default {
                             e.isused = '正常'
                         }
                         e.imgurl = this.imgurl
-                        console.log(this.$store.state.toReplaceDot);
+                        
                         this.$store.state.toReplaceDot(e)
                         return
                     }
@@ -576,7 +576,7 @@ export default {
                 if (this.imgurl.length != 0) {
                     this.posturl = this.posturl + `&imgurl=${this.imgurl}`
                 }
-                console.log(this.posturl);
+                
                 this.$http.post(`${this.posturl}`)
                 this.clearAlldata()
                 clearInterval(timerr)
@@ -585,14 +585,14 @@ export default {
         submit2() {
             this.posturl = `http://152.136.254.142:5000/api/editline?id=${this.eidtOne}`
             this.input1.replace('/', '-')
-            console.log(this.input2);
+            
             if (this.input2 === '已清洗') {
                 this.input2 = 1
             }
             if (this.input2 === '未清洗') {
                 this.input2 = 0
             }
-            console.log(this.input2);
+            
             if (this.input1) {
                 this.posturl = this.posturl + `&time=${this.input1}`
             }
@@ -602,7 +602,7 @@ export default {
             if (this.input4) {
                 this.posturl = this.posturl + `&cardid=${this.input4}`
             }
-            console.log(this.posturl);
+            
             this.$http.post(`${this.posturl}`)
             this.$store.state.lineData.forEach(e => {
                 if (e.ORIG_FID === this.eidtOne) {
@@ -618,7 +618,7 @@ export default {
                     if (this.input2 === 1) {
                         e.isused = '已清洗'
                     }
-                    console.log(this.$store.state.toReplaceLine);
+                    
                     this.$store.state.toReplaceLine(e)
                     return
                 }
@@ -630,7 +630,7 @@ export default {
             this.$refs.upload2.submit()
 
             const timerr = setInterval(() => {
-                console.log(this.imgurl);
+                
                 this.posturl = `http://152.136.254.142:5000/api/editworker?cardid=${this.eidtOne}`
                 if (this.input7) {
                     this.posturl = this.posturl + `&name=${this.input7}`
@@ -644,7 +644,7 @@ export default {
                 if (this.imgurl != {}) {
                     this.posturl = this.posturl + `&manpic=${this.imgurl}`
                 }
-                console.log(this.posturl);
+                
                 this.$http.post(`${this.posturl}`)
                 this.imgurl = []
                 clearInterval(timerr)
@@ -653,13 +653,13 @@ export default {
                 const {
                     data: res2
                 } = await this.$http.get('http://152.136.254.142:5000/api/getworker')
-                console.log(res2.personinfo);
+                
                 res2.personinfo.forEach(e => {
                     e.manpic = (e.manpic || "").split(",")
                 });
                 this.$store.state.workData = res2.personinfo
 
-                console.log(this.$store.state.workData);
+                
                 this.clearAlldata()
                 clearInterval(timer)
             }, 1000)
@@ -671,7 +671,7 @@ export default {
             this.$refs.upload2.submit()
 
             const timerr = setInterval(() => {
-                console.log(this.imgurl);
+                
                 this.posturl = `http://152.136.254.142:5000/api/editworker?`
                 if (this.input1) {
                     this.posturl = this.posturl + `&name=${this.input1}`
@@ -685,7 +685,7 @@ export default {
                 if (this.imgurl != {}) {
                     this.posturl = this.posturl + `&manpic=${this.imgurl}`
                 }
-                console.log(this.posturl);
+                
                 this.$http.post(`${this.posturl}`)
                 this.imgurl = []
                 clearInterval(timerr)
@@ -694,13 +694,13 @@ export default {
                 const {
                     data: res2
                 } = await this.$http.get('http://152.136.254.142:5000/api/getworker')
-                console.log(res2.personinfo);
+                
                 res2.personinfo.forEach(e => {
                     e.manpic = (e.manpic || "").split(",")
                 });
                 this.$store.state.workData = res2.personinfo
 
-                console.log(this.$store.state.workData);
+                
                 this.clearAlldata()
                 clearInterval(timer)
             }, 1000)
@@ -716,14 +716,14 @@ export default {
                         e.time = this.input1
                     }
                     e.isused = '正常'
-                    // console.log(this.$store.state.toReplaceDot);
+                    // 
                     this.$store.state.toReplaceDot(e)
                     return
                 }
             });
         },
         async deleteRow2(index, row) {
-            console.log(index, row);
+            
             this.$http.post(`http://152.136.254.142:5000/api/editline?id=${row.ORIG_FID}&time=${this.input1}&isused=1`)
             this.$store.state.lineData.forEach(e => {
                 if (e.ORIG_FID === row.ORIG_FID) {
@@ -731,24 +731,24 @@ export default {
                         e.time = this.input1
                     }
                     e.isused = '已清洗'
-                    console.log(this.$store.state.toReplaceLine);
+                    
                     this.$store.state.toReplaceLine(e)
                     return
                 }
             });
         },
         async deleteRow3(index, row) {
-            console.log(row.cardid);
+            
             this.$http.post(`http://152.136.254.142:5000/api/deleteworker?cardid=${row.cardid}`)
             const {
                 data: res2
             } = await this.$http.get('http://152.136.254.142:5000/api/getworker')
-            console.log(res2.personinfo);
+            
             res2.personinfo.forEach(e => {
                 e.manpic = (e.manpic || "").split(",")
             });
             this.$store.state.workData = res2.personinfo
-            console.log(this.$store.state.workData);
+            
         },
         tableRowClassName(row, rowIndex) {
             if (row.row.isused === '异常') {
@@ -773,10 +773,10 @@ export default {
             this.$store.state.showWorkBox2 = false
         },
         handleRemove(file, fileList) {
-            console.log(file, fileList);
+            
         },
         handlePreview(file) {
-            console.log(file);
+            
         },
         handleExceed(files, fileList) {
             this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
@@ -785,33 +785,33 @@ export default {
             return this.$confirm(`确定移除 ${ file.name }？`);
         },
         handleAvatarSuccess(res, file) {
-            console.log(res, file);
+            
             this.imgurl.push(res.data.url)
-            console.log(this.imgurl);
+            
         },
         filterChange(e) {
-            console.log(e);
+            
         },
         switchchange(e) {
-            console.log(this.values.showDotvalue * this.values.showLinevalue);
+            
             if (this.values.showDotvalue === this.values.showLinevalue) {
                 if (this.values.showDotvalue) {
                     this.$store.state.addALLs()
-                    console.log("all");
+                    
                 } else {
                     this.$store.state.clearAll()
-                    console.log("clearall");
+                    
                 }
             } else {
                 if (this.values.showDotvalue) {
                     // this.showTable()
                     this.$store.state.clearlines()
 
-                    console.log("showDot");
+                    
                 } else {
                     this.$store.state.removeAllDot()
                     // this.$store.state.clearAll()
-                    console.log("showline");
+                    
                 }
             }
         },
@@ -820,13 +820,13 @@ export default {
         search: {
             handler: function (search) {
                 // clearInterval()
-                // console.log(search);
+                // 
                 if (this.timerr) {
                     clearInterval(this.timerr)
                     this.timerr = null
                 }
                 this.timerr = setInterval(() => {
-                    // console.log(search);
+                    // 
                     if (!search) {
                         this.$store.state.tabledots = this.$store.state.dotsData
                         return
@@ -835,7 +835,7 @@ export default {
                         if (e.id == search) {
                             this.$store.state.tabledots = []
                             this.$store.state.tabledots.push(e)
-                            // console.log(this.$store.state.tabledots);
+                            // 
                             clearInterval(this.timerr)
                             this.timerr = null
                             return
@@ -849,12 +849,12 @@ export default {
     },
     mounted() {
         this.timerr = setInterval(() => {
-            console.log(this.$store.state.tabledots);
+            
             if (this.$store.state.tabledots.length>100) {
-                console.log(this.$store.state.tabledots);
+                
                 this.$store.state.tabledots = this.$store.state.dotsData
                 clearInterval(this.timerr)
-                console.log('mv get dots');
+                
             }
         }, 1000);
         const dt = new Date();
@@ -866,7 +866,7 @@ export default {
             d = '0' + d
         }
         this.input1 = ye + '-' + months[mon] + '-' + d
-        console.log(this.input1);
+        
     }
 }
 </script>

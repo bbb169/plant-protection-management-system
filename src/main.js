@@ -213,7 +213,6 @@ const store = createStore({
             view.on('click', viewClick)
             sketch.on("update", sketchUpdate)
             view.on('layerview-create',()=>{ this.state.loading = false })
-            console.log(lineDatas);
             
             renderAllLines()
             renderDots(this.state.dotsData)
@@ -286,8 +285,6 @@ const store = createStore({
                 });
             }
             function dotTimeRange(t1,t2) {
-                console.log(pointgraphicsLayer.graphics.items,t1,t2);
-
                 pointgraphicsLayer.graphics.items.forEach(e => {
                     if (`${t2}` >= e.attributes.time && e.attributes.time > `${t1}`) {
                         e.visible=true
@@ -298,10 +295,8 @@ const store = createStore({
             }
             function lineTimeRange(t1,t2) {
                 linegraphicsLayer.graphics.items.forEach(e => {
-                        // console.log(e.attributes.time);
                         if (`${t2}` >= e.attributes.time && e.attributes.time > `${t1}`) {
-                            e.visible=true
-                            console.log(e);
+                            e.visible=SVGComponentTransferFunctionElement
                         }else{
                             e.visible=false
                         }
@@ -310,13 +305,9 @@ const store = createStore({
             }
             // 更新点
             function replaceDot(e) {
-                console.log(e,pointgraphicsLayer);
                 pointgraphicsLayer.graphics.items.forEach(i=>{
                     if (i.attributes.id==e.id) {
                         i.visible=false
-                        // i.symbol.color.a=0
-                        // i.destroy() 
-                        console.log(i);
                         if (!e.x) {
                             e.x=i.geometry.longitude
                             e.y=i.geometry.latitude
@@ -329,11 +320,9 @@ const store = createStore({
             }
             // 更新线
             function replaceLine(e) {
-                console.log(e);
                 linegraphicsLayer.graphics.items.forEach(i=>{
                     if (i.attributes.id==e.ORIG_FID) {
                         i.visible=false
-                        console.log(i);
                         for (let num = 0; num < e.dots.length - 1; num++) {
                             renderLine(e.dots[num], e.dots[num + 1], e)
                         }
@@ -344,12 +333,9 @@ const store = createStore({
             }
             // 筛选时间的点线数据
             function lineTime(t1, t2) {
-                console.log(t1, t2);
                 linegraphicsLayer.graphics.items.forEach(e => {
-                    // console.log(e.attributes.time);
                     if (`${t1}` >= e.attributes.time && e.attributes.time > `${t2}`) {
                         e.visible=true
-                        // console.log(e);
                     }else{
                         e.visible=false
                     }
@@ -361,7 +347,6 @@ const store = createStore({
                 e.forEach(i => {
                     way.push([i.KL - 0.004360, i.kT + 0.002074])
                 })
-                // console.log(way);
                 const polyline = {
                     type: "polyline",
                     paths: way
@@ -392,14 +377,12 @@ const store = createStore({
                         return
                     }
                 })
-                console.log(view.popup);
             }
 
             function pushPopline(params) {
                 linegraphicsLayer.graphics.items.forEach(i=>{
                     if (i.attributes.id==e.ORIG_FID) {
                         const pt =new Point(i.geometry.paths[0][0][0], i.geometry.paths[0][0][1])
-                        console.log(i,i.geometry.paths[0][0],pt);
                         view.popup.open({
                             // Set the popup's title to the coordinates of the location
                             features: i,
@@ -411,7 +394,6 @@ const store = createStore({
                         return
                     }
                 })
-                console.log(view.popup);
             }
 
             function renderDots(dots) {
@@ -511,9 +493,7 @@ const store = createStore({
             }
 
             function viewClick(e) {
-                console.log(e);
                 if (e.button === 2) {
-                    console.log('x:' + e.mapPoint.longitude.toFixed(6) + ', y:' + e.mapPoint.latitude.toFixed(6));
                     const point = { //Create a point
                         type: "point",
                         longitude: e.mapPoint.longitude.toFixed(6),
@@ -563,8 +543,6 @@ const store = createStore({
                             points.push(pointgraphicsLayer.graphics.items[i].geometry)
                         }
                         const res = pointgraphicsLayer.graphics.items[i].attributes
-                        console.log(res);
-
 
                         if (res.type === '椰树') {
                             this.state.yetree++
@@ -587,7 +565,6 @@ const store = createStore({
                                 this.state.time8++
                             }
                         }
-                        // console.log(this.state);
                     }
                 }
                 this.state.showechart = true
