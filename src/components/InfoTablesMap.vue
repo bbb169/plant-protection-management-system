@@ -3,24 +3,24 @@
 
     <!-- 植物信息表格 -->
     <transition name="slide-fade">
-        <vxe-table :data="this.$store.state.tabledots" height="800" style="width: 800px" class="outtable" v-show="this.$store.state.show" :row-class-name="tableRowClassName" show-overflow @cell-click="vxeclick">
+        <vxe-table :data="this.$store.state.tabledots" height="800" style="width: 800px" class="outtable" v-show="this.$store.state.show" :row-class-name="tableRowClassName" show-overflow @cell-click="treeCellClick">
             <vxe-column field="id" title="Id" min-width="30" align="center" />
             <vxe-column field="type" title="类型" min-width="50" :filters="[
         { label: '椰树', value: '椰树' },
         { label: '榕树', value: '榕树' },
-      ]" :filter-method="vxfilterHandlerx" align="center" />
+      ]" :filter-method="filterTreeType" align="center" />
             <vxe-column field="time" title="日期" min-width="80" sortable align="center" />
             <vxe-column field="isused" title="状态" min-width="50" :filters="[
         { label: '正常', value: '正常' },
         { label: '异常', value: '异常' },
-      ]" :filter-method="vxfilterHandler2" align="center" />
+      ]" :filter-method="filterTreeStatus" align="center" />
             <vxe-column field="areaid" title="所属区域" min-width="80" :filters="[
         { label: '区域1', value: '1' },
         { label: '区域2', value: '2' },
         { label: '区域3', value: '3' },
         { label: '区域4', value: '4' },
         { label: '区域5', value: '5' },
-      ]" :filter-method="vxfilterHandler3" align="center" />
+      ]" :filter-method="filterTreeArea" align="center" />
             <vxe-column field="imgurl" title="图片地址" min-width="100">
                 <template #default="scope">
                     <el-image style="width: 50px; height: 50px" :src="scope.row.imgurl[0]" :initial-index="0" :preview-src-list="scope.row.imgurl" fit="cover">
@@ -312,8 +312,7 @@ export default {
     },
     methods: {
         ...mapMutations(['showTable']),
-        vxeclick(e) {
-            console.log(e.row);
+        treeCellClick(e) {
             this.$store.state.gotos(e.row)
             this.$store.state.pushPopDoto(e.row)
         },
@@ -335,135 +334,86 @@ export default {
             this.input7 = ''
             this.imgurl = []
         },
-        vxfilterHandler3({
-            option,
-            row
-        }) {
-            if (this.times3 === 0) {
-                // sort filters
-                if (this.filerOder.f === 0) {
-                    this.filerOder.f = 3
+        sortTreeFilters(order) {
+            const sort = () => {
+                const getTime = () => {
+                    return order === 1 ? 'times' : order === 2 ? 'times2' : 'times3'
                 }
-                if (this.filerOder.s === 0 && this.filerOder.f != 3) {
-                    this.filerOder.s = 3
-                }
-                if (this.filerOder.t === 0 && this.filerOder.s != 3 && this.filerOder.f != 3) {
-                    this.filerOder.t = 3
-                }
-                this.times3++
-                this.$store.state.justremoveAllDot()
+                let sortTimer = getTime()
 
+                if (this[sortTimer] === 0 ) {
+                    if (this.filerOder.f === 0) {
+                    this.filerOder.f = order
+                    }
+                    if (this.filerOder.s === 0 && this.filerOder.f != order) {
+                        this.filerOder.s = order
+                    }
+                    if (this.filerOder.t === 0 && this.filerOder.s != order && this.filerOder.f != order) {
+                        this.filerOder.t = order
+                    }
+                    this[sortTimer]++
+                    this.$store.state.justremoveAllDot()
+                }
+
+                if (this[sortTimer] === 1) {
+                    setTimeout(() => {
+                        this[sortTimer] = 0
+                        this.filerOder.f = 0
+                        this.filerOder.s = 0
+                        this.filerOder.t = 0
+                    }, 1000);
+                }
             }
-            if (this.times3 === 1) {
-                setTimeout(() => {
-                    this.times3 = 0
-                    this.filerOder.f = 0
-                    this.filerOder.s = 0
-                    this.filerOder.t = 0
-                }, 1000);
-            }
-            if (row.areaid === option.value) {
+
+            const doForLast = (row)=> {
                 if (this.filerOder.t === 0) {
                     if (this.filerOder.s === 0) {
                         this.$store.state.renderADot(row)
                     } else {
-                        if (this.filerOder.s === 3) {
+                        if (this.filerOder.s === order) {
                             this.$store.state.renderADot(row)
                         }
                     }
                 } else {
-                    if (this.filerOder.t === 3) {
+                    if (this.filerOder.t === order) {
                         this.$store.state.renderADot(row)
                     }
                 }
+            }
+
+            return { sort: sort, doForLast: doForLast }
+        },
+        filterTreeArea({
+            option,
+            row
+        }) {
+            const sorts = this.sortTreeFilters(3)
+            sorts.sort()
+
+            if (row.areaid === option.value) {
+                sorts.doForLast(row)
                 return row.areaid === option.value
             }
         },
-        vxfilterHandlerx({
+        filterTreeType({
             option,
             row
         }) {
-            if (this.times === 0) {
-                // sort filters
-                if (this.filerOder.f === 0) {
-                    this.filerOder.f = 1
-                }
-                if (this.filerOder.s === 0 && this.filerOder.f != 1) {
-                    this.filerOder.s = 1
-                }
-                if (this.filerOder.t === 0 && this.filerOder.s != 1 && this.filerOder.f != 1) {
-                    this.filerOder.t = 1
-                }
-                this.times++
-                this.$store.state.justremoveAllDot()
-
-            }
-            if (this.times === 1) {
-                setTimeout(() => {
-                    this.times = 0
-                    this.filerOder.f = 0
-                    this.filerOder.s = 0
-                    this.filerOder.t = 0
-                }, 1000);
-            }
+            const sorts = this.sortTreeFilters(1)
+            sorts.sort()
             if (row.type === option.value) {
-                if (this.filerOder.t === 0) {
-                    if (this.filerOder.s === 0) {
-                        this.$store.state.renderADot(row)
-                    } else {
-                        if (this.filerOder.s === 1) {
-                            this.$store.state.renderADot(row)
-                        }
-                    }
-                } else {
-                    if (this.filerOder.t === 1) {
-                        this.$store.state.renderADot(row)
-                    }
-                }
+                sorts.doForLast(row)
                 return row.type === option.value
             }
         },
-        vxfilterHandler2({
+        filterTreeStatus({
             option,
             row
         }) {
-            if (this.times2 === 0) {
-                // sort filters
-                if (this.filerOder.f === 0) {
-                    this.filerOder.f = 2
-                }
-                if (this.filerOder.s === 0 && this.filerOder.f != 2) {
-                    this.filerOder.s = 2
-                }
-                if (this.filerOder.t === 0 && this.filerOder.s != 2 && this.filerOder.f != 2) {
-                    this.filerOder.t = 2
-                }
-                this.times2++
-                this.$store.state.justremoveAllDot()
-
-            }
-            if (this.times2 === 1) {
-                setTimeout(() => {
-                    this.times2 = 0
-                    this.filerOder.f = 0
-                    this.filerOder.s = 0
-                    this.filerOder.t = 0
-                }, 1000);
-            }
+            const sorts = this.sortTreeFilters(2)
+            sorts.sort()
             if (row.isused === option.value) {
-                if (this.filerOder.t === 0) {
-                    if (this.filerOder.s === 0) {
-                        this.$store.state.renderADot(row)
-                    } else {
-                        if (this.filerOder.s === 2) {
-                            this.$store.state.renderADot(row)
-                        }
-                    }
-                } else {
-                    if (this.filerOder.t === 2) {
-                        this.$store.state.renderADot(row)
-                    }
-                }
+                sorts.doForLast(row)
                 return row.isused === option.value
             }
         },
