@@ -1,21 +1,21 @@
 <template>
     <div class="slider-demo-block">
-        <div class="timechoose">近期植株点筛选（90天）
+        <div class="timechoose">近期植株点筛选（360天）
             <div class="block">
                 <span class="demonstration">植株点日期表筛选</span>
                 <el-date-picker v-model="timeRange" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" @change="pickTime(0)" format="YYYY 年 MM 月 DD 日" value-format="YYYY-MM-DD">
                 </el-date-picker>
             </div>
         </div>
-        <el-slider v-model="dotvalue" range show-stops :max="90" @change="dotValueChange" />
-        <div class="timechoose">近期道路段筛选（90天）
+        <el-slider v-model="dotvalue" range show-stops :max="360" @change="dotValueChange" />
+        <div class="timechoose">近期道路段筛选（360天）
             <div class="block">
                 <span class="demonstration">道路段日期表筛选</span>
                 <el-date-picker v-model="timeRange2" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" @change="pickTime(1)" format="YYYY 年 MM 月 DD 日" value-format="YYYY-MM-DD">
                 </el-date-picker>
             </div>
         </div>
-        <el-slider v-model="linevalue" range show-stops :max="90" @change="lineValueChange" />
+        <el-slider v-model="linevalue" range show-stops :max="360" @change="lineValueChange" />
     </div>
 </template>
 
@@ -24,12 +24,12 @@ export default {
     name: 'TimeFilterBar',
     data() {
         return {
-            dotvalue: [0, 90],
+            dotvalue: [0, 360],
             dottime1: '',
             dottime2: '',
             linetime1: '',
             linetime2: '',
-            linevalue: [0, 90],
+            linevalue: [0, 360],
             input1: {},
             values: {
                 showDotvalue: true,
