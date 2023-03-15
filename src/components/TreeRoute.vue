@@ -59,8 +59,6 @@ export default {
                 ]
             })
             const map = new Map({
-                // basemap: "osm-streets-relief" // Basemap layer service
-
             });
             const veccLayer = new WebTileLayer({
                 urlTemplate:
@@ -97,7 +95,6 @@ export default {
             map.add(graphicsLayer);
             
             const routeUrl = "https://edutrial.geoscene.cn/geoscene/rest/services/finrout/NAServer/route";
-            // const routeUrl = "http://localhost:6080/arcgis/rest/services/finr/NAServer/路径";
             view.graphics.removeAll();
             // 卫生站初始时创建
              var pointStart = new Point(110.324812, 20.070832)
@@ -243,44 +240,13 @@ export default {
                                 stops: new FeatureSet({
                                     features: view.graphics.toArray()
                                 }),
-
-                                // returnDirections: true
-
                             });
                             getRoute(routeParams)
                         }
                     });
-                    // This event fires for each click on any action
-                    // Notice this event is handled on the default popup of the View
-                    // NOT on an instance of PopupTemplate
-                    // view.popup.on("trigger-action", function(event){
-                    // // If the zoom-out action is clicked, fire the zoomOut() function
-                    // if(event.action.id === "measure-this"){
-                    //     
-                    // }
-                    // });
                     graphicsLayer.add(pointGraphic);
                 }
             })
-            
-            // var pointStop2 = new Point(110.324812, 20.065132)
-            // addGraphic("destination", pointStop2);
-            // getRoute()
-            // function addGraphic(type, point) {
-            //     const graphic = new Graphic({
-            //         symbol: {
-            //             type: "simple-marker",
-            //             color: (type === "origin") ? "white" : "black",
-            //             size: "8px"
-            //         },
-            //         geometry: point
-            //     });
-            //     graphic.attributes = {
-            //         "name": "end",
-            //     };
-            //     view.graphics.add(graphic);
-            //     
-            // }
 
             function getRoute(routeParams) {
                 
