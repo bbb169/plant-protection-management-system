@@ -275,7 +275,6 @@ const store = createStore({
             }
             // 筛选时间的点数据
             function dotTime(t1, t2) {
-                console.log(t1, t2);
                 pointgraphicsLayer.graphics.items.forEach(e => {
                     if (`${t1}` >= e.attributes.time && e.attributes.time > `${t2}`) {
                         e.visible=true
@@ -585,7 +584,6 @@ const store = createStore({
 
             function bufferRender(meter) {
                 pointParams.distances = [meter/1000];
-                console.log(789,this.state.loading,pointParams.geometries);
                 if (!pointParams.geometries||pointParams.geometries.length<1) {
                     return
                 }
@@ -602,7 +600,6 @@ const store = createStore({
                     };
 
                     for (var i = 0; i < features.length; i++) {
-                        // console.log(features[i]);
                         buffraphicsLayer.add(new Graphic(features[i], symbol))
                     }
                     this.state.loading = false
