@@ -146,21 +146,14 @@ const store = createStore({
                 spatialReference: { wkid: 4490 },
 
                 subDomains: ["t0", "t1", "t2", "t3", "t4", "t5", "t6", "t7"],         
-            });
+            })
             const cvacLayer = new WebTileLayer({
                 urlTemplate:
                   "https://{subDomain}.tianditu.gov.cn/cva_c/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=cva&STYLE=default&TILEMATRIXSET=c&FORMAT=tiles&TILECOL={col}&TILEROW={row}&TILEMATRIX={level}&tk=d49f2500d194b59fd2fb57f7d00dc891",
                 tileInfo: tileInfo,
                 spatialReference: { wkid: 4490 },
                 subDomains: ["t0", "t1", "t2", "t3", "t4", "t5", "t6", "t7"],         
-            });
-            const roadLayer = new WebTileLayer({
-              urlTemplate:
-                "https://{subDomain}.tianditu.gov.cn/TDTService/wfs?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=cva&STYLE=default&TILEMATRIXSET=c&FORMAT=tiles&TILECOL={col}&TILEROW={row}&TILEMATRIX={level}&tk=d49f2500d194b59fd2fb57f7d00dc891",
-              tileInfo: tileInfo,
-              spatialReference: { wkid: 4490 },
-              subDomains: ["gisserver"],         
-            });
+            })
            const geometryService = new GeometryService("https://utility.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer");
             const buffraphicsLayer = new GraphicsLayer();
             const pointgraphicsLayer = new GraphicsLayer();
@@ -182,7 +175,6 @@ const store = createStore({
 
             map.add(veccLayer);
             map.add(cvacLayer);
-            map.add(roadLayer);
             map.add(sketchLayer);
             map.add(pointgraphicsLayer);
             map.add(buffraphicsLayer);
