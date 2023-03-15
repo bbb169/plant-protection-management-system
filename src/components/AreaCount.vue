@@ -27,7 +27,6 @@ export default {
         }
     },
     updated() {
-        console.log(this.$store.state.showechart);
         // draw typecake
         const mytypecake = echarts.init(document.getElementById('typecake'));
         mytypecake.setOption({

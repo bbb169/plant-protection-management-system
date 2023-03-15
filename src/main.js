@@ -73,7 +73,7 @@ const store = createStore({
             gotos: [],
             renderADot: [],
             renderAline: [],
-            justremoveAllDot: [],
+            showDotsInSet: [],
             justremoveline: [],
             toReplaceDot:[],
             toReplaceLine:[],
@@ -96,7 +96,7 @@ const store = createStore({
     mutations: {
         async showTable() {
             this.state.loading = true
-            const [esriConfig, Map, MapView, Graphic, GraphicsLayer, Sketch, BufferParameters, GeometryService, SpatialReference, Point, TileInfo,WebTileLayer,geometryEngineAsync] = await loadModules(["esri/config", "esri/Map", "esri/views/MapView", "esri/Graphic", "esri/layers/GraphicsLayer", "esri/widgets/Sketch", "esri/rest/support/BufferParameters",
+            const [esriConfig, arcgisMap, MapView, Graphic, GraphicsLayer, Sketch, BufferParameters, GeometryService, SpatialReference, Point, TileInfo,WebTileLayer,geometryEngineAsync] = await loadModules(["esri/config", "esri/Map", "esri/views/MapView", "esri/Graphic", "esri/layers/GraphicsLayer", "esri/widgets/Sketch", "esri/rest/support/BufferParameters",
                 "esri/tasks/GeometryService", "esri/geometry/SpatialReference", "esri/geometry/Point", 'esri/layers/support/TileInfo',"esri/layers/WebTileLayer","esri/geometry/geometryEngineAsync",], options)
             esriConfig.apiKey = "AAPK932f5cc544e84bbab268bba3fe84a1d7SmaFp9BOIQZjFsfOj4uzM52qSUILhferkbdExJlkTihF_9zSXO3NXumZUOh9kpIl";
             const tileInfo = new TileInfo({
@@ -132,7 +132,7 @@ const store = createStore({
                     { "level": "19", "scale": 1128.4994333267211, "resolution": 0.000002682209014892578 }
                 ]
             })
-            const map = new Map({});
+            const map = new arcgisMap({});
             const view = new MapView({
                 container: "viewDiv",
                 map: map,
@@ -197,7 +197,7 @@ const store = createStore({
             this.state.clearlines = removeLines
             this.state.removeAllDot = removeDots
             this.state.clearlines = removeAllLine
-            this.state.justremoveAllDot = justremoveDots
+            this.state.showDotsInSet = showDotsInSet
             this.state.justremoveline = justremovelines
             this.state.addALLs = addALL
             this.state.operateLayers = operateLayers
@@ -214,6 +214,8 @@ const store = createStore({
             sketch.on("update", sketchUpdate)
             view.on('layerview-create',()=>{ this.state.loading = false })
             
+            // render tree dots and road line
+
             renderAllLines()
             renderDots(this.state.dotsData)
             function renderADots(e) {
@@ -262,8 +264,10 @@ const store = createStore({
                 map.add(pointgraphicsLayer);
                 map.remove(linegraphicsLayer)
             }
-            function justremoveDots() {
-                pointgraphicsLayer.removeAll()
+            function showDotsInSet(filterResultSet) {
+                pointgraphicsLayer.graphics.items.forEach(e => {
+                    filterResultSet.has(e.attributes.id) ? e.visible = true : e.visible = false
+                });
             }
             function justremovelines() {
                 linegraphicsLayer.removeAll()

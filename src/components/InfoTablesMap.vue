@@ -252,6 +252,7 @@ export default {
             newDotDatas: [],
             fitThing1: [],
             fitThing3: [],
+            filterResultSet: new Set(),
             times: 0,
             times2: 0,
             times3: 0,
@@ -352,7 +353,6 @@ export default {
                         this.filerOder.t = order
                     }
                     this[sortTimer]++
-                    this.$store.state.justremoveAllDot()
                 }
 
                 if (this[sortTimer] === 1) {
@@ -368,20 +368,29 @@ export default {
             const doForLast = (row)=> {
                 if (this.filerOder.t === 0) {
                     if (this.filerOder.s === 0) {
-                        this.$store.state.renderADot(row)
+                        renderCollectDots.call(this,row.id)
                     } else {
                         if (this.filerOder.s === order) {
-                            this.$store.state.renderADot(row)
+                            renderCollectDots.call(this,row.id)
                         }
                     }
                 } else {
                     if (this.filerOder.t === order) {
-                        this.$store.state.renderADot(row)
+                        renderCollectDots.call(this,row.id)
                     }
                 }
             }
-
+            
             return { sort: sort, doForLast: doForLast }
+
+            function renderCollectDots(id) {
+                this.filterResultSet.add(id.toString())
+                if (this.timerr) clearTimeout(this.timerr)
+                this.timerr = setTimeout(() => {
+                    this.$store.state.showDotsInSet(this.filterResultSet)
+                    this.filterResultSet = new Set()
+                }, 100);
+            }
         },
         filterTreeArea({
             option,
